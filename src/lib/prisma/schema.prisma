@@ -1,0 +1,107 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin", "darwin-arm64"]
+}
+
+model Account {
+  id                    String    @id @map("_id")
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Session {
+  id        String   @id @map("_id")
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model User {
+  id            String                    @id @map("_id")
+  name          String
+  email         String                   @unique
+  emailVerified Boolean
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime
+  username      String?                   @unique
+  conversations ConversationParticipant[]
+  messages      Message[]
+
+  @@map("user")
+}
+
+model Verification {
+  id         String    @id @map("_id")
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+
+model Conversation {
+  id              String                    @id @default(uuid()) @map("_id")
+  name            String?
+  participants    ConversationParticipant[]
+  messages        Message[]
+  latestMessageId String?                   @unique
+  latestMessage   Message?                  @relation(name: "latestConversationMessage", fields: [latestMessageId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+}
+
+model ConversationParticipant {
+  id                  String       @id @default(uuid()) @map("_id")
+  userId              String
+  user                User         @relation(fields: [userId], references: [id])
+  conversationId      String
+  conversation        Conversation @relation(fields: [conversationId], references: [id])
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  latestSeenMessageId String?
+  latestSeenMessage   Message?     @relation(fields: [latestSeenMessageId], references: [id])
+}
+
+model Message {
+  id             String                    @id @default(uuid()) @map("_id")
+  body           String
+  conversationId String
+  conversation   Conversation              @relation(fields: [conversationId], references: [id])
+  senderId       String
+  sender         User                      @relation(fields: [senderId], references: [id])
+  isLatestIn     Conversation?             @relation(name: "latestConversationMessage")
+  createdAt      DateTime                  @default(now())
+  updatedAt      DateTime                  @updatedAt
+  lastSeenBy     ConversationParticipant[]
+}
