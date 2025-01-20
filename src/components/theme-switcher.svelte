@@ -1,25 +1,43 @@
 <script lang="ts">
-	import Sun from 'lucide-svelte/icons/sun';
-	import Moon from 'lucide-svelte/icons/moon';
+	import { Sun, Moon, Monitor } from 'lucide-svelte';
 
-	import { resetMode, setMode } from 'mode-watcher';
+	import { setMode } from 'mode-watcher';
 	import * as DropdownMenu from '@/components/ui/dropdown-menu/index';
-	import { buttonVariants } from '@/components/ui/button/index';
+	import {
+		buttonVariants,
+		type ButtonSize,
+		type ButtonVariant
+	} from '@/components/ui/button/index';
+
+	let {
+		class: className,
+		variant = 'outline',
+		size = 'icon',
+		...Props
+	}: { class?: string; variant?: ButtonVariant; size?: ButtonSize; [prop: string]: any } = $props();
 </script>
 
 <DropdownMenu.Root>
-	<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline', size: 'icon' })}>
-		<Sun
-			class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-		/>
+	<DropdownMenu.Trigger
+		class="{buttonVariants({ variant, size })} flex items-center justify-center {className}"
+		{...Props}
+	>
+		<Sun class="size-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
 		<Moon
-			class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+			class="absolute size-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
 		/>
 		<span class="sr-only">Toggle theme</span>
 	</DropdownMenu.Trigger>
-	<DropdownMenu.Content align="end">
-		<DropdownMenu.Item onclick={() => setMode('light')}>Light</DropdownMenu.Item>
-		<DropdownMenu.Item onclick={() => setMode('dark')}>Dark</DropdownMenu.Item>
-		<DropdownMenu.Item onclick={() => resetMode()}>System</DropdownMenu.Item>
+	<DropdownMenu.Content align="center">
+		<DropdownMenu.Item onclick={() => setMode('light')}
+			><Sun className="mr-2 size-4" /> Light</DropdownMenu.Item
+		>
+		<DropdownMenu.Item onclick={() => setMode('dark')}
+			><Moon className="mr-2 size-4" /> Dark</DropdownMenu.Item
+		>
+		<DropdownMenu.Separator />
+		<DropdownMenu.Item onclick={() => setMode('system')}
+			><Monitor className="mr-2 size-4" /> System</DropdownMenu.Item
+		>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
