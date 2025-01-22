@@ -1,15 +1,14 @@
-import { auth } from '$lib/auth.server';
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad, RequestEvent } from './$types';
+import { auth } from '@/lib/auth/server';
 
-export const load: PageServerLoad = async (event: RequestEvent) => {
+export const load = async ({ request }) => {
 	const session = await auth.api.getSession({
-		headers: event.request.headers
+		headers: request.headers
 	});
 
 	if (session) {
-		return redirect(302, '/');
+		if (!session.user.username) {
+			return redirect(302, '/auth/finish');
+		} else return redirect(302, '/');
 	}
-
-	return session;
 };

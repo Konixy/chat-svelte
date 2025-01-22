@@ -13,5 +13,13 @@ export const auth = betterAuth({
 			clientId: GOOGLE_CLIENT_ID,
 			clientSecret: GOOGLE_CLIENT_SECRET
 		}
+	},
+	user: {
+		additionalFields: {
+			username: {
+				type: 'string',
+				required: false
+			}
+		}
 	}
 });

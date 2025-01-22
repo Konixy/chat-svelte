@@ -1,6 +1,6 @@
 <script>
 	import Button from '@/components/ui/button/button.svelte';
-	import { authClient } from '$lib/auth-client';
+	import { authClient } from '@/lib/auth/auth-client';
 	import GoogleIcon from '@/components/icons/google-icon.svelte';
 	import Favicon from '@/components/icons/favicon.svelte';
 	import GithubIcon from '@/components/icons/github-icon.svelte';
