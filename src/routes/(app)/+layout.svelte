@@ -10,9 +10,9 @@
 	let error = $derived(data.conversations.errors?.[0]);
 </script>
 
-<ThemeSwitcher class="absolute right-0 top-0 m-10" />
+<ThemeSwitcher class="absolute top-0 right-0 m-10" />
 
-<Sidebar.Provider style="--sidebar-width: 20rem">
+<Sidebar.Provider open={data.sidebarOpen}>
 	<AppSidebar {user} conversations={conversations || []} convId={data.convId} />
 	<main>
 		{#if error}

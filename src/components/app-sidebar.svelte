@@ -18,19 +18,19 @@
 	let modalOpen = $state(false);
 </script>
 
-<Sidebar.Root variant="floating" collapsible="icon" class="--sidebar-with=40rem">
+<Sidebar.Root variant="floating" collapsible="icon">
 	<Sidebar.Header class="flex flex-row">
 		{#if sidebar.open}
-			<Input type="text" name="Search" placeholder="Search for conversations" />
+			<Input type="text" name="Search" placeholder="Search for conversations" class="bg-sidebar" />
 		{/if}
-		<Sidebar.Trigger class="my-1 mr-1 p-4 hover:bg-muted" />
+		<Sidebar.Trigger class="hover:bg-muted my-1 mr-1 p-4" />
 	</Sidebar.Header>
 	<Sidebar.Content>
 		<Sidebar.Group class="gap-4">
 			{#each conversations as conv (conv.id)}
 				<a
 					href="/{conv.id}"
-					class="flex cursor-pointer flex-col gap-1 rounded-lg py-2 pl-3 pr-4 transition {convId ===
+					class="flex cursor-pointer flex-col gap-1 rounded-lg py-2 pr-4 pl-3 transition {convId ===
 					conv.id
 						? 'bg-accent'
 						: 'hover:bg-secondary-foreground'}"
@@ -42,12 +42,12 @@
 							{/if}
 						{/each}
 					</div>
-					<div class="overflow-hidden text-ellipsis text-nowrap font-bold">
+					<div class="overflow-hidden font-bold text-nowrap text-ellipsis">
 						{conv.name || conv.participants.map((p) => p.user.name).join(', ')}
 					</div>
 					<div>{conv.latestMessage?.body || 'Empty conversation'}</div>
 					{#if Math.random() > 0.5}
-						<Sidebar.MenuBadge class="-mt-3 rounded-full bg-red-500"
+						<Sidebar.MenuBadge class="-mt-3 rounded-full bg-red-500 text-white"
 							>{Math.floor(Math.random() * 10)}</Sidebar.MenuBadge
 						>
 					{/if}

@@ -59,7 +59,7 @@
 	});
 </script>
 
-<Command.Dialog bind:open class="outline-none">
+<Command.Dialog bind:open class="outline-hidden">
 	<Dialog.Header class="border-b px-4 pb-4 pt-5">
 		<Dialog.Title>Search</Dialog.Title>
 		<Dialog.Description>Create a conversation or a group by selecting users</Dialog.Description>

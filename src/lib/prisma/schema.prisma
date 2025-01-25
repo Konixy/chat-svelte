@@ -45,7 +45,7 @@ model Session {
 model User {
   id            String                    @id @map("_id")
   name          String
-  email         String                   @unique
+  email         String                    @unique
   emailVerified Boolean
   image         String?
   accounts      Account[]
@@ -79,6 +79,8 @@ model Conversation {
   latestMessage   Message?                  @relation(name: "latestConversationMessage", fields: [latestMessageId], references: [id], onUpdate: NoAction, onDelete: NoAction)
   createdAt       DateTime                  @default(now())
   updatedAt       DateTime                  @updatedAt
+
+  @@map("conversation")
 }
 
 model ConversationParticipant {
@@ -91,6 +93,8 @@ model ConversationParticipant {
   updatedAt           DateTime     @updatedAt
   latestSeenMessageId String?
   latestSeenMessage   Message?     @relation(fields: [latestSeenMessageId], references: [id])
+
+  @@map("conversationParticipant")
 }
 
 model Message {
@@ -104,4 +108,6 @@ model Message {
   createdAt      DateTime                  @default(now())
   updatedAt      DateTime                  @updatedAt
   lastSeenBy     ConversationParticipant[]
+
+  @@map("message")
 }

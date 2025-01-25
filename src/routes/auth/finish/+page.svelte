@@ -32,7 +32,7 @@
 			id="username"
 			name="username"
 			placeholder="johndoe"
-			class="transition {!valid && 'ring-2 ring-red-800 ring-offset-2 focus:!ring-red-500'}"
+			class="transition {!valid && 'ring-2 ring-red-800 ring-offset-2 focus:ring-red-500!'}"
 			value={username}
 			{oninput}
 		/>

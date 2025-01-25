@@ -3,8 +3,9 @@ import { query } from '$lib/graphql/client';
 import type { Conversation } from '@/lib/types';
 import { redirect } from '@sveltejs/kit';
 import { auth } from '@/lib/auth/server';
+import { SIDEBAR_COOKIE_NAME } from '@/components/ui/sidebar/constants.js';
 
-export const load = async ({ fetch, request, params }) => {
+export const load = async ({ fetch, request, params, cookies }) => {
 	const data = await query<{ conversations: Conversation[] }>(
 		ConversationOperations.Query.conversations,
 		fetch
@@ -20,5 +21,10 @@ export const load = async ({ fetch, request, params }) => {
 		return redirect(302, '/auth/finish');
 	}
 
-	return { conversations: data, session, convId: params.convId };
+	return {
+		conversations: data,
+		session,
+		convId: params.convId,
+		sidebarOpen: cookies.get(SIDEBAR_COOKIE_NAME) === 'true'
+	};
 };

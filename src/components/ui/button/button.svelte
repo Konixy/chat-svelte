@@ -4,7 +4,7 @@
 	import { type VariantProps, tv } from 'tailwind-variants';
 
 	export const buttonVariants = tv({
-		base: 'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+		base: 'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
 		variants: {
 			variant: {
 				default: 'bg-primary text-primary-foreground hover:bg-primary/90',
@@ -67,7 +67,7 @@
 		{...restProps}
 	>
 		<span class="btn-content {contentClassName}">{@render children?.()}</span>
-		<div class="loader absolute hidden animate-spin"><Loader class="!size-5" /></div>
+		<div class="loader absolute hidden animate-spin"><Loader class="size-5!" /></div>
 	</a>
 {:else}
 	<button
@@ -80,6 +80,6 @@
 		{...restProps}
 	>
 		<span class="btn-content {contentClassName}">{@render children?.()}</span>
-		<div class="loader absolute hidden animate-spin"><Loader class="!size-5" /></div>
+		<div class="loader absolute hidden animate-spin"><Loader class="size-5!" /></div>
 	</button>
 {/if}
