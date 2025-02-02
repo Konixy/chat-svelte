@@ -21,6 +21,11 @@ export function shortenName(name: string): string {
 </script>
 
 <Avatar.Root class="{squared ? 'rounded-lg' : ''} {cProps.class}" {...cProps}>
-	<Avatar.Image class={squared ? 'rounded-lg' : ''} src={user.image} alt={user.name} />
+	<Avatar.Image
+		loading="lazy"
+		class={squared ? 'rounded-lg' : ''}
+		src={user.image}
+		alt={user.name}
+	/>
 	<Avatar.Fallback class={squared ? 'rounded-lg' : ''}>{shortenName(user.name)}</Avatar.Fallback>
 </Avatar.Root>
