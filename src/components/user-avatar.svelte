@@ -1,22 +1,26 @@
 <script lang="ts">
-	import type { User } from '@prisma/client';
-	import { Avatar as AvatarPrimitive } from 'bits-ui';
-	import * as Avatar from '@/components/ui/avatar';
+import type { User } from '@/lib/types';
+import { Avatar as AvatarPrimitive } from 'bits-ui';
+import * as Avatar from '@/components/ui/avatar';
 
-	let {
-		user,
-		...cProps
-	}: { user: Pick<User, 'image' | 'name' | 'username'> } & AvatarPrimitive.RootProps = $props();
+let {
+	user,
+	squared,
+	...cProps
+}: {
+	user: Pick<User, 'image' | 'name' | 'username'>;
+	squared?: boolean;
+} & AvatarPrimitive.RootProps = $props();
 
-	export function shortenName(name: string): string {
-		return name
-			.split(' ')
-			.map((e, i) => (i < 2 ? e.split('')[0]?.toUpperCase() : ''))
-			.join('');
-	}
+export function shortenName(name: string): string {
+	return name
+		.split(' ')
+		.map((e, i) => (i < 2 ? e.split('')[0]?.toUpperCase() : ''))
+		.join('');
+}
 </script>
 
-<Avatar.Root {...cProps}>
-	<Avatar.Image src={user.image} alt={user.name} />
-	<Avatar.Fallback>{shortenName(user.name)}</Avatar.Fallback>
+<Avatar.Root class="{squared ? 'rounded-lg' : ''} {cProps.class}" {...cProps}>
+	<Avatar.Image class={squared ? 'rounded-lg' : ''} src={user.image} alt={user.name} />
+	<Avatar.Fallback class={squared ? 'rounded-lg' : ''}>{shortenName(user.name)}</Avatar.Fallback>
 </Avatar.Root>

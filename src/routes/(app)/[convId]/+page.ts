@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 
 export async function load({ params, parent }) {
-	const { conversations } = await parent();
+	const { conversations, session } = await parent();
 
 	const matching = conversations.data?.conversations.filter((c) => c.id === params.convId);
 
@@ -9,5 +9,5 @@ export async function load({ params, parent }) {
 		return redirect(302, '/');
 	}
 
-	return { convId: params.convId };
+	return { session };
 }

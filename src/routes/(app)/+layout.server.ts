@@ -5,8 +5,8 @@ import { redirect } from '@sveltejs/kit';
 import { auth } from '@/lib/auth/server';
 import { SIDEBAR_COOKIE_NAME } from '@/components/ui/sidebar/constants.js';
 
-export const load = async ({ fetch, request, params, cookies }) => {
-	const data = await query<{ conversations: Conversation[] }>(
+export const load = async ({ fetch, request, cookies }) => {
+	const data = await query<'conversations', Conversation[]>(
 		ConversationOperations.Query.conversations,
 		fetch
 	);
@@ -24,7 +24,6 @@ export const load = async ({ fetch, request, params, cookies }) => {
 	return {
 		conversations: data,
 		session,
-		convId: params.convId,
-		sidebarOpen: cookies.get(SIDEBAR_COOKIE_NAME) === 'true'
+		sidebarOpen: !(cookies.get(SIDEBAR_COOKIE_NAME) === 'false')
 	};
 };

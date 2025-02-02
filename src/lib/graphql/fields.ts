@@ -27,6 +27,7 @@ export const ConversationFields = `
       ${UserFields}
     }
     lastSeenMessageId
+    unreadMessages
   }
   latestMessage {
     ${MessageFields}
