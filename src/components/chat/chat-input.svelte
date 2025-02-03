@@ -8,11 +8,27 @@ import type { User } from '@/lib/types';
 
 let { convId, user }: { convId: string; user: User } = $props();
 let value = $state('');
+let animate = $state(false);
 
-async function onsubmit(e: SubmitEvent) {
+function onsubmit(e: SubmitEvent) {
+	e.preventDefault();
+
+	animate = false;
+
+	setTimeout(() => {
+		animate = true;
+	}, 50);
+}
+
+async function realonsubmit(e: SubmitEvent) {
 	e.preventDefault();
 
 	if (value === '') return;
+
+	animate = false;
+	setTimeout(() => {
+		animate = true;
+	}, 10);
 
 	const message = {
 		id: crypto.randomUUID(),
@@ -42,9 +58,7 @@ async function onsubmit(e: SubmitEvent) {
 		}
 	);
 
-	if (response.data?.sendMessage) {
-		console.log('success');
-	} else {
+	if (!response.data?.sendMessage) {
 		console.log(response.errors?.[0]);
 	}
 }
@@ -52,9 +66,11 @@ async function onsubmit(e: SubmitEvent) {
 
 <form {onsubmit} class="flex flex-row">
 	<Input
-		class="bg-sidebar rounded-xl py-5 pr-10 pl-4"
-		placeholder="Write your message here."
+		class="bg-sidebar rounded-xl py-5 pr-10 pl-4 transition focus-visible:ring-2 focus-visible:ring-offset-0"
+		placeholder="Write your message here"
 		bind:value
 	/>
-	<button type="submit" class="-ml-8"><SendIcon class="size-5" /></button>
+	<button type="submit" class="{animate && 'animate-send'} -ml-9"
+		><SendIcon class="size-5" /></button
+	>
 </form>

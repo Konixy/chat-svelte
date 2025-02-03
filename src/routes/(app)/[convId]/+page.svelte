@@ -61,7 +61,7 @@ let chatRef: HTMLDivElement | undefined = $state();
 	<div bind:this={chatRef} class="grid grow overflow-x-hidden overflow-y-scroll">
 		<ChatMessages {user} parentRef={chatRef} />
 	</div>
-	<div class="mt-4 mr-2 mb-2">
+	<div class="mt-4 mr-3 mb-3 ml-1">
 		<ChatInput {convId} {user} />
 	</div>
 </div>
