@@ -10,17 +10,17 @@ let { convId, user }: { convId: string; user: User } = $props();
 let value = $state('');
 let animate = $state(false);
 
-function onsubmit(e: SubmitEvent) {
-	e.preventDefault();
+// function onsubmit(e: SubmitEvent) {
+// 	e.preventDefault();
 
-	animate = false;
+// 	animate = false;
 
-	setTimeout(() => {
-		animate = true;
-	}, 50);
-}
+// 	setTimeout(() => {
+// 		animate = true;
+// 	}, 50);
+// }
 
-async function realonsubmit(e: SubmitEvent) {
+async function onsubmit(e: SubmitEvent) {
 	e.preventDefault();
 
 	if (value === '') return;
@@ -66,7 +66,7 @@ async function realonsubmit(e: SubmitEvent) {
 
 <form {onsubmit} class="flex flex-row">
 	<Input
-		class="bg-sidebar rounded-xl py-5 pr-10 pl-4 transition focus-visible:ring-2 focus-visible:ring-offset-0"
+		class="bg-sidebar focus-visible:ring-muted rounded-xl py-5 pr-10 pl-4 transition focus-visible:ring-2 focus-visible:ring-offset-0"
 		placeholder="Write your message here"
 		bind:value
 	/>
