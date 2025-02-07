@@ -16,7 +16,7 @@ let messages = $derived($messagesStore.get(convId));
 let conv = $derived($conversations.find((c) => c.id === convId));
 let isGroup = $derived((conv?.participants.length || 0) > 2);
 
-let { user, parentRef }: { user: User; parentRef: HTMLDivElement | undefined } = $props();
+let { user }: { user: User } = $props();
 
 async function loadMessages() {
 	let convIdSnapshot = $state.snapshot(convId);
@@ -38,10 +38,6 @@ async function loadMessages() {
 $effect(() => {
 	loadMessages();
 });
-
-$effect(() => {
-	if (messages) parentRef?.scrollTo({ top: parentRef?.scrollHeight });
-});
 </script>
 
 {#if messages}
@@ -51,16 +47,16 @@ $effect(() => {
 			<div>Start it by sending the first message!</div>
 		</div>
 	{:else}
-		<div class="mt-auto mr-3 ml-1 box-border flex flex-col justify-end overflow-x-hidden">
-			{#each messages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()) as message, i (message.id)}
+		<div class="mx-2 flex flex-col-reverse">
+			{#each messages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) as message, i (message.id)}
 				{@const sentByMe = message.sender.id === user.id}
 				{@const seenBy = conv?.participants
 					.filter((p) => p.user.id !== user.id)
 					.filter((p) => p.lastSeenMessageId === message.id)
 					.filter((p) => p.user.id !== message.sender.id)}
-				{@const prevMessage = i > 0 && messages[i - 1]}
+				{@const prevMessage = messages.length > i + 1 && messages[i + 1]}
 				{@const prevIsSameSender = prevMessage && prevMessage.sender.id === message.sender.id}
-				{@const nextMessage = messages.length > i + 1 && messages[i + 1]}
+				{@const nextMessage = i > 0 && messages[i - 1]}
 				{@const nextIsSameSender = nextMessage && nextMessage.sender.id === message.sender.id}
 
 				<div
@@ -76,7 +72,7 @@ $effect(() => {
 						{/if}
 						<div>
 							<div
-								class="inline-block max-w-[70%] rounded-t-2xl rounded-b-2xl px-2 py-1 text-left text-wrap break-words transition {sentByMe
+								class="inline-block max-w-1/4 rounded-t-2xl rounded-b-2xl px-2 py-1 text-left text-wrap break-words transition {sentByMe
 									? `text-primary-foreground float-end ${prevIsSameSender && 'rounded-tr-sm'} ${nextIsSameSender && 'rounded-br-sm'} ${message.loading ? 'bg-primary/80' : 'bg-primary'}`
 									: `bg-muted ${prevIsSameSender && 'rounded-tl-sm'} ${nextIsSameSender && 'rounded-bl-sm'}`}"
 								in:fade
@@ -89,7 +85,7 @@ $effect(() => {
 								/>
 							{/if}
 						</div>
-						{#if seenBy && seenBy.length > 0}
+						{#if seenBy && seenBy.length > 0 && (isGroup || !sentByMe)}
 							<div
 								class="text-foreground/60 flex flex-row items-center justify-end text-sm {sentByMe &&
 									'text-right'}"
@@ -103,7 +99,7 @@ $effect(() => {
 											</Tooltip.Trigger>
 											<Tooltip.Content class="text-center">
 												<div>{p.user.name}</div>
-												<div class="text-muted-foreground">{p.user.username}</div>
+												<div class="text-muted-foreground text-sm">{p.user.username}</div>
 											</Tooltip.Content>
 										</Tooltip.Root>
 									{/each}

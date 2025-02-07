@@ -25,10 +25,9 @@ $effect(() => {
 
 <Sidebar.Provider open={data.sidebarOpen}>
 	<AppSidebar {user} conversations={$conversations || []} {convId} />
-	<main class="h-screen w-full overflow-hidden">
-		{#if error}
-			<div>{error.message}</div>
-		{/if}
+	<Sidebar.Inset
+		class="!mt-20 max-h-[calc(100svh-(--spacing(22)))] min-h-[calc(100svh-(--spacing(22)))] !rounded-2xl"
+	>
 		{@render children()}
-	</main>
+	</Sidebar.Inset>
 </Sidebar.Provider>

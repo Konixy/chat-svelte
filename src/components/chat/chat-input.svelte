@@ -70,7 +70,7 @@ async function onsubmit(e: SubmitEvent) {
 		placeholder="Write your message here"
 		bind:value
 	/>
-	<button type="submit" class="{animate && 'animate-send'} -ml-9"
-		><SendIcon class="size-5" /></button
-	>
+	<button type="submit" class="{animate && 'animate-send'} -ml-9">
+		<SendIcon class="size-5" />
+	</button>
 </form>
