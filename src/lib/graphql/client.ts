@@ -2,36 +2,43 @@ import type { DocumentNode } from 'graphql';
 import { PUBLIC_GRAPHQL_API, PUBLIC_URL, PUBLIC_WEBSOCKET_API } from '$env/static/public';
 import { createClient, type FormattedExecutionResult } from 'graphql-ws/client';
 import type { GraphQLResponse } from '../types';
+import { error } from '@sveltejs/kit';
 
 export async function query<N extends keyof any, R>(
 	query: DocumentNode,
 	fetcher: typeof fetch = fetch,
 	headers?: HeadersInit
 ): Promise<GraphQLResponse<N, R>> {
-	const h = new Headers(headers);
-	h.set('Accept', 'application/json');
-	h.set('Origin', PUBLIC_URL);
-	h.set('Content-Type', 'application/json');
+	// const h = new Headers(headers);
+	// h.set('Accept', 'application/json');
+	// h.set('Origin', PUBLIC_URL);
+	// h.set('Content-Type', 'application/json');
 
-	const request = new Request(PUBLIC_GRAPHQL_API, {
-		body: JSON.stringify({ query: query.loc?.source.body }),
-		headers: h,
-		method: 'POST',
-		credentials: 'include',
-		mode: 'cors'
-	});
+	try {
+		const response = await fetch(PUBLIC_GRAPHQL_API, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				Origin: PUBLIC_URL,
+				...headers
+			},
+			body: JSON.stringify({
+				query: query.loc?.source.body
+			}),
+			credentials: 'include',
+			cache: 'no-store' // Important for SvelteKit 2.x
+		});
 
-	(request as any).external = true;
+		if (!response.ok) {
+			error(500, 'pas content');
+		}
 
-	return new Promise((resolve, reject) => {
-		fetcher(request)
-			.then(async (r) => {
-				return resolve(await r.json());
-			})
-			.catch((e) => {
-				return reject(e);
-			});
-	});
+		return await response.json();
+	} catch (error) {
+		console.error('GraphQL mutation error:', error);
+		throw error;
+	}
 }
 
 export async function mutate<N extends keyof any, R, V = Record<string, any>>(
@@ -40,30 +47,37 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 	fetcher: typeof fetch = fetch,
 	headers?: HeadersInit
 ): Promise<GraphQLResponse<N, R>> {
-	const h = new Headers(headers);
-	h.set('Accept', 'application/json');
-	h.set('Origin', PUBLIC_URL);
-	h.set('Content-Type', 'application/json');
+	// const h = new Headers(headers);
+	// h.set('Accept', 'application/json');
+	// h.set('Origin', PUBLIC_URL);
+	// h.set('Content-Type', 'application/json');
 
-	const request = new Request(PUBLIC_GRAPHQL_API, {
-		body: JSON.stringify({ query: query.loc?.source.body, variables }),
-		headers: h,
-		method: 'POST',
-		credentials: 'include',
-		mode: 'cors'
-	});
+	try {
+		const response = await fetch(PUBLIC_GRAPHQL_API, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				Origin: PUBLIC_URL,
+				...headers
+			},
+			body: JSON.stringify({
+				query: query.loc?.source.body,
+				variables
+			}),
+			credentials: 'include',
+			cache: 'no-store' // Important for SvelteKit 2.x
+		});
 
-	(request as any).external = true;
+		if (!response.ok) {
+			error(500, 'pas content');
+		}
 
-	return new Promise((resolve, reject) => {
-		fetcher(request)
-			.then(async (r) => {
-				return resolve(await r.json());
-			})
-			.catch((e) => {
-				return reject(e);
-			});
-	});
+		return await response.json();
+	} catch (error) {
+		console.error('GraphQL mutation error:', error);
+		throw error;
+	}
 }
 
 export function subscribe<N extends keyof any, R>(
