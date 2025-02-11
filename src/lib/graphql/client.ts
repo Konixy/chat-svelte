@@ -17,7 +17,8 @@ export async function query<N extends keyof any, R>(
 		body: JSON.stringify({ query: query.loc?.source.body }),
 		headers: h,
 		method: 'POST',
-		credentials: 'include'
+		credentials: 'include',
+		mode: 'cors'
 	});
 
 	(request as any).external = true;
@@ -48,7 +49,8 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 		body: JSON.stringify({ query: query.loc?.source.body, variables }),
 		headers: h,
 		method: 'POST',
-		credentials: 'include'
+		credentials: 'include',
+		mode: 'cors'
 	});
 
 	(request as any).external = true;
