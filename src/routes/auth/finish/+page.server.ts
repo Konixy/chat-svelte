@@ -18,8 +18,6 @@ export const load: PageServerLoad = async ({ request }) => {
 
 export const actions = {
 	createUsername: async (event) => {
-		console.log('hey');
-
 		const variables = { username: (await event.request.formData()).get('username') };
 
 		return new Promise((resolve, reject) => {

@@ -13,13 +13,17 @@ export async function query<N extends keyof any, R>(
 	h.set('Origin', PUBLIC_URL);
 	h.set('Content-Type', 'application/json');
 
+	const request = new Request(PUBLIC_GRAPHQL_API, {
+		body: JSON.stringify({ query: query.loc?.source.body }),
+		headers: h,
+		method: 'POST',
+		credentials: 'include'
+	});
+
+	(request as any).external = true;
+
 	return new Promise((resolve, reject) => {
-		fetcher(PUBLIC_GRAPHQL_API, {
-			body: JSON.stringify({ query: query.loc?.source.body }),
-			headers: h,
-			method: 'POST',
-			credentials: 'include'
-		})
+		fetcher(request)
 			.then(async (r) => {
 				return resolve(await r.json());
 			})
@@ -40,13 +44,17 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 	h.set('Origin', PUBLIC_URL);
 	h.set('Content-Type', 'application/json');
 
+	const request = new Request(PUBLIC_GRAPHQL_API, {
+		body: JSON.stringify({ query: query.loc?.source.body, variables }),
+		headers: h,
+		method: 'POST',
+		credentials: 'include'
+	});
+
+	(request as any).external = true;
+
 	return new Promise((resolve, reject) => {
-		fetcher(PUBLIC_GRAPHQL_API, {
-			body: JSON.stringify({ query: query.loc?.source.body, variables }),
-			headers: h,
-			method: 'POST',
-			credentials: 'include'
-		})
+		fetcher(request)
 			.then(async (r) => {
 				return resolve(await r.json());
 			})
