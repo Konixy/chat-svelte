@@ -15,7 +15,7 @@ export async function query<N extends keyof any, R>(
 	// h.set('Content-Type', 'application/json');
 
 	try {
-		const response = await fetch(PUBLIC_GRAPHQL_API, {
+		const response = await fetcher(PUBLIC_GRAPHQL_API, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
@@ -53,7 +53,7 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 	// h.set('Content-Type', 'application/json');
 
 	try {
-		const response = await fetch(PUBLIC_GRAPHQL_API, {
+		const response = await fetcher(PUBLIC_GRAPHQL_API, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
