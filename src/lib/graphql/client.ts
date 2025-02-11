@@ -1,11 +1,6 @@
 import type { DocumentNode, GraphQLError } from 'graphql';
 import { PUBLIC_GRAPHQL_API, PUBLIC_URL, PUBLIC_WEBSOCKET_API } from '$env/static/public';
-import {
-	createClient,
-	type Client,
-	type FormattedExecutionPatchResult,
-	type FormattedExecutionResult
-} from 'graphql-ws/client';
+import { createClient, type FormattedExecutionResult } from 'graphql-ws/client';
 import type { GraphQLResponse } from '../types';
 
 export async function query<N extends keyof any, R>(
