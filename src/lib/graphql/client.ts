@@ -3,10 +3,6 @@ import { PUBLIC_GRAPHQL_API, PUBLIC_URL, PUBLIC_WEBSOCKET_API } from '$env/stati
 import { createClient, type FormattedExecutionResult } from 'graphql-ws/client';
 import type { GraphQLResponse } from '../types';
 
-const apiUrl = PUBLIC_GRAPHQL_API.startsWith('http')
-	? PUBLIC_GRAPHQL_API
-	: `${window.location.origin}${PUBLIC_GRAPHQL_API}`;
-
 export async function query<N extends keyof any, R>(
 	query: DocumentNode,
 	fetcher: typeof fetch = fetch,
@@ -18,7 +14,7 @@ export async function query<N extends keyof any, R>(
 	h.set('Content-Type', 'application/json');
 
 	return new Promise((resolve, reject) => {
-		fetcher(apiUrl, {
+		fetcher(PUBLIC_GRAPHQL_API, {
 			body: JSON.stringify({ query: query.loc?.source.body }),
 			headers: h,
 			method: 'POST',
@@ -45,7 +41,7 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 	h.set('Content-Type', 'application/json');
 
 	return new Promise((resolve, reject) => {
-		fetcher(apiUrl, {
+		fetcher(PUBLIC_GRAPHQL_API, {
 			body: JSON.stringify({ query: query.loc?.source.body, variables }),
 			headers: h,
 			method: 'POST',
