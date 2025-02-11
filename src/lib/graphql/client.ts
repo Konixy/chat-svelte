@@ -70,7 +70,7 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 		});
 
 		if (!response.ok) {
-			error(500, 'pas content');
+			error(response.status, response.statusText);
 		}
 
 		return await response.json();
