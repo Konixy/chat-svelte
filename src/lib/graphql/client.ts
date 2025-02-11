@@ -1,7 +1,11 @@
-import type { DocumentNode, GraphQLError } from 'graphql';
+import type { DocumentNode } from 'graphql';
 import { PUBLIC_GRAPHQL_API, PUBLIC_URL, PUBLIC_WEBSOCKET_API } from '$env/static/public';
 import { createClient, type FormattedExecutionResult } from 'graphql-ws/client';
 import type { GraphQLResponse } from '../types';
+
+const apiUrl = PUBLIC_GRAPHQL_API.startsWith('http')
+	? PUBLIC_GRAPHQL_API
+	: `${window.location.origin}${PUBLIC_GRAPHQL_API}`;
 
 export async function query<N extends keyof any, R>(
 	query: DocumentNode,
@@ -14,12 +18,11 @@ export async function query<N extends keyof any, R>(
 	h.set('Content-Type', 'application/json');
 
 	return new Promise((resolve, reject) => {
-		fetcher(PUBLIC_GRAPHQL_API, {
+		fetcher(apiUrl, {
 			body: JSON.stringify({ query: query.loc?.source.body }),
 			headers: h,
 			method: 'POST',
-			credentials: 'include',
-			mode: 'cors'
+			credentials: 'include'
 		})
 			.then(async (r) => {
 				return resolve(await r.json());
@@ -42,12 +45,11 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 	h.set('Content-Type', 'application/json');
 
 	return new Promise((resolve, reject) => {
-		fetcher(PUBLIC_GRAPHQL_API, {
+		fetcher(apiUrl, {
 			body: JSON.stringify({ query: query.loc?.source.body, variables }),
 			headers: h,
 			method: 'POST',
-			credentials: 'include',
-			mode: 'cors'
+			credentials: 'include'
 		})
 			.then(async (r) => {
 				return resolve(await r.json());
