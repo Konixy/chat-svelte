@@ -20,16 +20,24 @@ export const actions = {
 	createUsername: async (event) => {
 		const variables = { username: (await event.request.formData()).get('username') };
 
-		const response = await mutate<'createUsername', boolean>(
-			UserOperations.Mutations.createUsername,
-			variables,
-			event.fetch
-		);
+		return new Promise((resolve, reject) => {
+			mutate<'createUsername', boolean>(
+				UserOperations.Mutations.createUsername,
+				variables,
+				event.fetch
+			)
+				.catch((e) => {
+					console.log(e);
 
-		if (response.errors) {
-			return { success: false, errors: response.errors };
-		}
+					return reject({ success: false, errors: [e] });
+				})
+				.then((response) => {
+					if (response?.errors) {
+						return resolve({ success: false, errors: response.errors });
+					}
 
-		return { success: true };
+					return resolve({ success: true });
+				});
+		});
 	}
 } satisfies Actions;
