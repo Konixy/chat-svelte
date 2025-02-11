@@ -20,7 +20,7 @@ export const actions = {
 	createUsername: async (event) => {
 		const variables = { username: (await event.request.formData()).get('username') };
 
-		const response = await mutate<{ createUsername?: boolean }>(
+		const response = await mutate<'createUsername', boolean>(
 			UserOperations.Mutations.createUsername,
 			variables,
 			event.fetch
