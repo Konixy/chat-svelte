@@ -29,7 +29,7 @@ export const actions = {
 				.catch((e) => {
 					console.log(e);
 
-					return reject({ success: false, errors: [e] });
+					return resolve({ success: false, errors: [e] });
 				})
 				.then((response) => {
 					if (response?.errors) {
