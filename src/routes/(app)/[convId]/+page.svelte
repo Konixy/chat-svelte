@@ -18,6 +18,8 @@ let user = $derived(data.session.user);
 
 let conv = $derived($conversations.find((c) => c.id === convId)) as Conversation;
 
+let parent = $state<HTMLDivElement | null>(null);
+
 $effect(() => {
 	const unsubscibe = subscribeToNewMessages(data.session, (m) => {
 		if (m.sender.id !== user.id) {
@@ -58,8 +60,8 @@ $effect(() => {
 </header>
 
 <!-- change that ugly arbitrary value (don't work on mobile and when sidebar closed) -->
-<div class="w-[calc(100svw-(--spacing(90)))] flex-1 overflow-y-scroll">
-	<ChatMessages {user} />
+<div bind:this={parent} class="w-[calc(100svw-(--spacing(90)))] flex-1 overflow-y-scroll">
+	<ChatMessages {user} {parent} />
 </div>
 <div class="m-2">
 	<ChatInput {convId} {user} />

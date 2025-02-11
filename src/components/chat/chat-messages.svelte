@@ -16,7 +16,7 @@ let messages = $derived($messagesStore.get(convId));
 let conv = $derived($conversations.find((c) => c.id === convId));
 let isGroup = $derived((conv?.participants.length || 0) > 2);
 
-let { user }: { user: User } = $props();
+let { user, parent }: { user: User; parent: HTMLDivElement | null } = $props();
 
 async function loadMessages() {
 	let convIdSnapshot = $state.snapshot(convId);
@@ -37,6 +37,10 @@ async function loadMessages() {
 
 $effect(() => {
 	loadMessages();
+
+	parent?.scrollTo({
+		top: parent.scrollHeight
+	});
 });
 </script>
 
@@ -75,7 +79,6 @@ $effect(() => {
 								class="inline-block max-w-1/4 rounded-t-2xl rounded-b-2xl px-2 py-1 text-left text-wrap break-words transition {sentByMe
 									? `text-primary-foreground float-end ${prevIsSameSender && 'rounded-tr-sm'} ${nextIsSameSender && 'rounded-br-sm'} ${message.loading ? 'bg-primary/80' : 'bg-primary'}`
 									: `bg-muted ${prevIsSameSender && 'rounded-tl-sm'} ${nextIsSameSender && 'rounded-bl-sm'}`}"
-								in:fade
 							>
 								{message.body}
 							</div>

@@ -39,10 +39,10 @@ async function createConversation() {
 	);
 
 	const convId = response.data?.createConversation?.conversationId;
+	loading = false;
 	if (convId) {
-		// await invalidateAll();
+		await invalidateAll();
 		goto(`/${convId}`);
-		loading = false;
 		open = false;
 		pIds = [];
 	}
