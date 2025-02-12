@@ -11,7 +11,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			Origin: PUBLIC_URL,
 			...request.headers
 		},
-		body: request.body,
+		body: JSON.stringify(await request.json()),
 		credentials: 'include',
 		cache: 'no-store'
 	});
