@@ -8,7 +8,8 @@ import { SIDEBAR_COOKIE_NAME } from '@/components/ui/sidebar/constants.js';
 export const load = async ({ fetch, request, cookies }) => {
 	const data = await query<'conversations', Conversation[]>(
 		ConversationOperations.Query.conversations,
-		fetch
+		fetch,
+		{ cookie: request.headers.get('cookie') || '' }
 	);
 
 	const session = await auth.api.getSession({

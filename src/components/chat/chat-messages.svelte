@@ -26,8 +26,7 @@ async function loadMessages() {
 		{
 			conversationId: convId
 		},
-		fetch,
-		{ cookie: document.cookie }
+		fetch
 	);
 
 	if (messages.data?.messages) {

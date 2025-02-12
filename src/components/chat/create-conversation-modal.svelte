@@ -22,9 +22,7 @@ let pIds: string[] = $state([]);
 let loading = $state(false);
 
 async function getUsers() {
-	const response = await query<'getUsers', User[]>(UserOperations.Queries.getUsers, fetch, {
-		cookie: document.cookie
-	});
+	const response = await query<'getUsers', User[]>(UserOperations.Queries.getUsers, fetch);
 
 	if (response.data?.getUsers) users = response.data.getUsers;
 }
