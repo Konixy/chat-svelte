@@ -24,7 +24,8 @@ export const actions = {
 			mutate<'createUsername', boolean>(
 				UserOperations.Mutations.createUsername,
 				variables,
-				event.fetch
+				event.fetch,
+				{ cookie: event.request.headers.get('cookie') || '' }
 			)
 				.catch((e) => {
 					console.log(e);
