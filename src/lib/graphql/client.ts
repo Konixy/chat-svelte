@@ -34,7 +34,7 @@ export async function query<N extends keyof any, R>(
 		});
 
 		if (!response.ok) {
-			error(500, 'pas content');
+			error(response.status, response.statusText);
 		}
 
 		return await response.json();
