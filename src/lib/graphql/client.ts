@@ -39,7 +39,7 @@ export async function query<N extends keyof any, R>(
 
 		return await response.json();
 	} catch (error) {
-		console.error('GraphQL mutation error:', error);
+		console.error('GraphQL query error:', error);
 		throw error;
 	}
 }

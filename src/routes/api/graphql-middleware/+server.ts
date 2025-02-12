@@ -16,5 +16,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		cache: 'no-store'
 	});
 
+	console.log('cookies:' + request.headers.get('cookie'));
+
 	return json(await response.json());
 };
