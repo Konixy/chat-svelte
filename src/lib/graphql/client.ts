@@ -27,6 +27,7 @@ export async function query<N extends keyof any, R>(
 				query: query.loc?.source.body
 			}),
 			credentials: 'include',
+			mode: 'cors',
 			cache: 'no-store' // Important for SvelteKit 2.x
 		});
 
@@ -66,6 +67,7 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 				variables
 			}),
 			credentials: 'include',
+			mode: 'cors',
 			cache: 'no-store' // Important for SvelteKit 2.x
 		});
 
