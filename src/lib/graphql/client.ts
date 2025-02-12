@@ -4,6 +4,8 @@ import { createClient, type FormattedExecutionResult } from 'graphql-ws/client';
 import type { GraphQLResponse } from '../types';
 import { error } from '@sveltejs/kit';
 
+const middlewarePath = PUBLIC_URL + '/api/graphql-middleware';
+
 export async function query<N extends keyof any, R>(
 	query: DocumentNode,
 	fetcher: typeof fetch = fetch,
@@ -15,7 +17,7 @@ export async function query<N extends keyof any, R>(
 	// h.set('Content-Type', 'application/json');
 
 	try {
-		const response = await fetcher(PUBLIC_GRAPHQL_API, {
+		const response = await fetcher(middlewarePath, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
@@ -54,7 +56,7 @@ export async function mutate<N extends keyof any, R, V = Record<string, any>>(
 	// h.set('Content-Type', 'application/json');
 
 	try {
-		const response = await fetcher(PUBLIC_GRAPHQL_API, {
+		const response = await fetcher(middlewarePath, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
