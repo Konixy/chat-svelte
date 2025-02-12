@@ -52,10 +52,7 @@ async function onsubmit(e: SubmitEvent) {
 	const response = await mutate<'sendMessage', boolean>(
 		MessagesOperations.Mutation.sendMessage,
 		message,
-		fetch,
-		{
-			cookie: document.cookie
-		}
+		fetch
 	);
 
 	if (!response.data?.sendMessage) {
