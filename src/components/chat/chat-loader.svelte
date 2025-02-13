@@ -15,7 +15,7 @@ function rand(min: number, max: number) {
 }
 </script>
 
-<div class="mr-3 ml-1 flex flex-col-reverse gap-1 overflow-hidden">
+<div class="mx-2 flex flex-col-reverse gap-1 overflow-hidden">
 	{#each content as c}
 		<div class="flex w-full flex-row {c.right ? 'justify-end' : 'justify-start'}">
 			<Skeleton
@@ -27,4 +27,3 @@ function rand(min: number, max: number) {
 		</div>
 	{/each}
 </div>
-<!-- <Skeleton /> -->
