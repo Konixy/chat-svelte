@@ -18,6 +18,8 @@ services:
     restart: unless-stopped
     ports:
       - 86:86
+    extra_hosts:
+      - "mongoservice:172.17.0.1"
     labels:
       # Stops watchtower from updating this container
       - 'com.centurylinklabs.watchtower.enable=false'
