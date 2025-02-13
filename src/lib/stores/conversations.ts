@@ -1,23 +1,19 @@
 import { writable } from 'svelte/store';
-import type { Conversation, GraphQLResponse } from '../types';
+import type { Conversation } from '../types';
 import ConversationOperations from '../graphql/operations/conversations';
-import { createClient } from 'graphql-ws/client';
-import { PUBLIC_WEBSOCKET_API } from '$env/static/public';
 import { subscribe } from '../graphql/client';
 
 const conversations = writable<Conversation[]>();
 
-function conversationsSubscribe(session: any) {
-	function unsubscribe() {
-		unsubscribe1();
-	}
-
-	const unsubscribe1 = subscribe<'conversationUpdated', Conversation>(
+function conversationsSubscribe(session: any, invalidate: () => Promise<void>): () => void {
+	return subscribe<'conversationUpdated', Conversation>(
 		ConversationOperations.Subscriptions.conversationUpdated,
 		(data) => {
 			const conv = data.data?.conversationUpdated;
 
 			if (conv) {
+				invalidate();
+
 				conversations.update((prev) => {
 					if (prev.find((c) => c.id === conv.id)) {
 						const i = prev.findIndex((c) => c.id === conv.id);
@@ -34,8 +30,6 @@ function conversationsSubscribe(session: any) {
 		},
 		session
 	);
-
-	return unsubscribe;
 }
 
 export { conversations, conversationsSubscribe };

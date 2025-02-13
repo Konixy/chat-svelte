@@ -1,4 +1,5 @@
 <script lang="ts">
+import { invalidateAll } from '$app/navigation';
 import { page } from '$app/state';
 import AppSidebar from '@/components/app-sidebar.svelte';
 import * as Sidebar from '@/components/ui/sidebar';
@@ -15,7 +16,7 @@ $conversations =
 	convs?.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()) || [];
 
 $effect(() => {
-	const unsubscibe = conversationsSubscribe(data.session);
+	const unsubscibe = conversationsSubscribe(data.session, invalidateAll);
 
 	return unsubscibe;
 });
