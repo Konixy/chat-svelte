@@ -42,7 +42,7 @@ async function onclick() {
 				class="hover:bg-muted transition-colors [&_svg]:size-5 [&_svg]:transition-none"
 			/>
 		</div>
-		<div>
+		<div class="text-sm md:text-base">
 			A full-stack chat app made with Svelte by
 			<a href="https://konixy.fr" target="_blank" class="font-bold hover:underline">Konixy</a>.
 		</div>

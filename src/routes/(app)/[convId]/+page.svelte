@@ -38,7 +38,8 @@ $effect(() => {
 });
 </script>
 
-<header class="mx-8 -mt-14 mb-6 flex shrink-0 flex-row items-center gap-2 rounded-lg">
+<header class="mx-4 -mt-14 mb-6 flex shrink-0 flex-row items-center gap-2 rounded-lg md:mx-8">
+	<Sidebar.Trigger class="mr-2 md:hidden" />
 	<div class="flex -space-x-4 overflow-hidden">
 		{#each conv.participants.filter((p) => p.user.id !== user.id) as p, i (p.id)}
 			{#if i < 2 || (i === 2 && conv.participants.length === 4)}
@@ -60,9 +61,12 @@ $effect(() => {
 </header>
 
 <!-- change that ugly arbitrary value (don't work on mobile and when sidebar closed) -->
-<div bind:this={parent} class="w-[calc(100svw-(--spacing(90)))] flex-1 overflow-y-scroll">
+<div
+	bind:this={parent}
+	class="w-screen flex-1 overflow-y-scroll not-md:mb-4 md:w-[calc(100svw-(--spacing(90)))]"
+>
 	<ChatMessages {user} {parent} />
 </div>
-<div class="m-2">
+<div class="fixed bottom-0 m-2 not-md:w-[calc(100svw-(--spacing(4)))] md:relative">
 	<ChatInput {convId} {user} />
 </div>

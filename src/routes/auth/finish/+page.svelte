@@ -1,32 +1,34 @@
 <script lang="ts">
-	import Button from '@/components/ui/button/button.svelte';
-	import Input from '@/components/ui/input/input.svelte';
-	import Label from '@/components/ui/label/label.svelte';
+import Button from '@/components/ui/button/button.svelte';
+import Input from '@/components/ui/input/input.svelte';
+import Label from '@/components/ui/label/label.svelte';
 
-	let { data, form } = $props();
-	let user = $derived(data.session.user);
+let { data, form } = $props();
+let user = $derived(data.session.user);
 
-	let username = $state('');
-	let valid = $state(false);
+let username = $state('');
+let valid = $state(false);
 
-	const regex = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+const regex = /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
 
-	function oninput(
-		e: Event & {
-			currentTarget: EventTarget & HTMLInputElement;
-		}
-	) {
-		if (e.currentTarget.value.match(regex)) valid = true;
-		else valid = false;
-
-		username = e.currentTarget.value.toLocaleLowerCase();
+function oninput(
+	e: Event & {
+		currentTarget: EventTarget & HTMLInputElement;
 	}
+) {
+	if (e.currentTarget.value.match(regex)) valid = true;
+	else valid = false;
+
+	username = e.currentTarget.value.toLocaleLowerCase();
+}
 </script>
 
-<main class="mx-auto flex h-screen w-full flex-col items-center justify-center gap-2">
-	<div class="text-2xl">One more step, <span class="font-bold">{user.name}</span>!</div>
-	<div class="mb-10 text-muted-foreground">We need to know what username would you want to use</div>
-	<form action="?/createUsername" method="post" class="flex w-64 flex-col gap-4">
+<main class="mx-auto flex h-screen w-full flex-col items-center justify-center gap-4 text-center">
+	<div class="text-xl sm:text-2xl">One more step, <span class="font-bold">{user.name}</span>!</div>
+	<div class="text-muted-foreground mx-4 mb-10 text-sm sm:text-base">
+		We need to know what username would you want to use
+	</div>
+	<form action="?/createUsername" method="post" class="flex w-3/4 flex-col gap-4 text-left sm:w-64">
 		<Label for="username">Username</Label>
 		<Input
 			id="username"

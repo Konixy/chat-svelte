@@ -53,6 +53,7 @@ let modalOpen = $state(false);
 					conv.id
 						? 'bg-accent text-foreground'
 						: 'hover:bg-muted/50 text-foreground/60'}"
+					onclick={() => sidebar.setOpenMobile(false)}
 				>
 					<div>
 						<UserAvatar

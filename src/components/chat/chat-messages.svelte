@@ -50,7 +50,7 @@ $effect(() => {
 			<div>Start it by sending the first message!</div>
 		</div>
 	{:else}
-		<div class="mx-2 flex flex-col-reverse">
+		<div class="mx-2 flex flex-col-reverse not-md:mb-10">
 			{#each messages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) as message, i (message.id)}
 				{@const sentByMe = message.sender.id === user.id}
 				{@const seenBy = conv?.participants
@@ -75,7 +75,7 @@ $effect(() => {
 						{/if}
 						<div>
 							<div
-								class="inline-block max-w-1/4 rounded-t-2xl rounded-b-2xl px-2 py-1 text-left text-wrap break-words transition {sentByMe
+								class="inline-block max-w-2/3 rounded-t-2xl rounded-b-2xl px-2 py-1 text-left text-wrap break-words transition {sentByMe
 									? `text-primary-foreground float-end ${prevIsSameSender && 'rounded-tr-sm'} ${nextIsSameSender && 'rounded-br-sm'} ${message.loading ? 'bg-primary/80' : 'bg-primary'}`
 									: `bg-muted ${prevIsSameSender && 'rounded-tl-sm'} ${nextIsSameSender && 'rounded-bl-sm'}`}"
 							>
