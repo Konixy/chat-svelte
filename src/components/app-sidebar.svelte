@@ -23,7 +23,7 @@ let {
 let modalOpen = $state(false);
 </script>
 
-<Sidebar.Root variant="inset" collapsible="icon">
+<Sidebar.Root variant="inset" collapsible="icon" class="!z-40">
 	<Sidebar.Header class="flex flex-row">
 		{#if sidebar.open}
 			<Input type="text" name="Search" placeholder="Search for conversations" class="bg-sidebar" />

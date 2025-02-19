@@ -45,7 +45,7 @@ $effect(() => {
 
 {#if messages}
 	{#if messages.length === 0}
-		<div class="text-foreground/30 mt-10 flex flex-col items-center text-lg">
+		<div class="text-foreground/30 mt-10 flex flex-col items-center text-center text-lg">
 			<div>Oh, it looks like this conversation isn't started yet...</div>
 			<div>Start it by sending the first message!</div>
 		</div>

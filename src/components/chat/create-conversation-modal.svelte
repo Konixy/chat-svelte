@@ -56,7 +56,7 @@ $effect(() => {
 });
 </script>
 
-<Command.Dialog bind:open class="z-50 outline-hidden">
+<Command.Dialog bind:open class="!z-50 outline-hidden">
 	<Dialog.Header class="border-b px-4 pt-5 pb-4">
 		<Dialog.Title>Search</Dialog.Title>
 		<Dialog.Description>Create a conversation or a group by selecting users</Dialog.Description>
