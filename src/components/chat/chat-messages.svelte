@@ -21,13 +21,9 @@ let { user, parent }: { user: User; parent: HTMLDivElement | null } = $props();
 async function loadMessages() {
 	let convIdSnapshot = $state.snapshot(convId);
 
-	const messages = await query<'messages', Message[]>(
-		MessagesOperations.Query.messages,
-		{
-			conversationId: convId
-		},
-		fetch
-	);
+	const messages = await query<'messages', Message[]>(MessagesOperations.Query.messages, {
+		conversationId: convId
+	});
 
 	if (messages.data?.messages) {
 		$messagesStore.set(convIdSnapshot, messages.data.messages);

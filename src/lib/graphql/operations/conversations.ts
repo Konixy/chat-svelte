@@ -44,7 +44,12 @@ const ConversationOperations = {
 		conversationUpdated: gql`
       subscription ConversationUpdated {
         conversationUpdated {
-          ${ConversationFields}
+					oldConversation {
+          	${ConversationFields}
+					}
+					newConversation {
+						${ConversationFields}
+					}
         }
       }
     `,

@@ -4,6 +4,7 @@ import type {
 	Message as PrismaMessage
 } from '@prisma/client';
 import type { GraphQLError } from 'graphql';
+import type { Session as SessionPrimitive } from 'better-auth';
 
 export type Conversation = Omit<PrismaConversation, 'latestMessageId'> & {
 	participants: ConversationParticipant[];
@@ -38,4 +39,9 @@ export type User = {
 	createdAt: Date;
 	updatedAt: Date;
 	image?: string | null | undefined;
+};
+
+export type Session = {
+	user: User;
+	session: SessionPrimitive;
 };
