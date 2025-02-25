@@ -17,7 +17,7 @@ jobs:
 
       - name: Create build .env file
         run: |
-          cp .env.build .env
+          cp .env.public .env
 
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
           echo "BETTER_AUTH_SECRET=${{ secrets.BETTER_AUTH_SECRET }}" >> .env
