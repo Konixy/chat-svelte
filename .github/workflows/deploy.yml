@@ -30,7 +30,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/chat-svelte:latest
+          tags: ghcr.io/konixy/chat-svelte:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -44,5 +44,7 @@ jobs:
           script: |
             cd /root/www/chat-svelte
 
-            docker pull ghcr.io/${{ github.repository_owner }}/chat-svelte:latest
+            wget -O docker-compose.yml https://raw.githubusercontent.com/${{ github.repository_owner }}/chat-svelte/main/docker-compose.yml
+
+            docker pull ghcr.io/konixy/chat-svelte:latest
             docker compose up -d --force-recreate
