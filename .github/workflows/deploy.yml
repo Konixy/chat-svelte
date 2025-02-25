@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /root/www/chat-svelte
+            cd /www/chat-svelte
 
             wget -O docker-compose.yml https://raw.githubusercontent.com/${{ github.repository_owner }}/chat-svelte/main/docker-compose.yml
 
