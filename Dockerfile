@@ -4,8 +4,6 @@ LABEL Developpers="Anatole Dufour"
 
 WORKDIR /app
 
-COPY .env.prod .env
-
 COPY . .
 
 RUN npm ci
