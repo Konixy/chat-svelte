@@ -1,10 +1,7 @@
 services:
   chat-svelte:
-    container_name: ghcr.io/konixy/chat-svelte:latest
-    image: chat-svelte:latest
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
+    container_name: chat-svelte
+    image: ghcr.io/konixy/chat-svelte:latest
     user: 'node'
     environment:
       - NODE_ENV=production
@@ -18,16 +15,13 @@ services:
       - 'mongoservice:172.17.0.1'
   chat-api-svelte:
     container_name: chat-api-svelte
-    image: chat-api-svelte:latest
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
+    image: ghcr.io/konixy/chat-api-svelte:latest
     user: 'node'
     environment:
       - NODE_ENV=production
       - TZ=Europe/Paris
     env_file:
-      - .env
+      - .env.backend
     restart: unless-stopped
     ports:
       - 87:87
