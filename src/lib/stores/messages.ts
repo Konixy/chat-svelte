@@ -11,30 +11,29 @@ function subscribeToNewMessages(session: any, onNewMessage?: (m: Message) => voi
 		MessagesOperations.Subscription.newMessage,
 		(data) => {
 			const message = data.data?.newMessage;
-
-			if (message) {
-				onNewMessage && onNewMessage(message);
-
-				messages.update((prev) => {
-					const convMessages = prev.get(message.conversationId);
-
-					if (convMessages) {
-						const oldMessIndex = convMessages.findIndex((e) => e.id === message.id);
-
-						if (oldMessIndex > -1) {
-							convMessages[oldMessIndex] = message;
-						} else {
-							convMessages.push(message);
-						}
-
-						prev.set(message.conversationId, [...convMessages]);
-					}
-
-					return prev;
-				});
-			} else {
-				console.log(data.errors?.[0]);
+			if (!message) {
+				console.error('Error receiving new message:', data.errors?.[0]);
+				return;
 			}
+
+			onNewMessage?.(message);
+
+			messages.update((prev) => {
+				const convMessages = prev.get(message.conversationId);
+				if (!convMessages) return prev;
+
+				const updatedMessages = [...convMessages];
+				const existingIndex = updatedMessages.findIndex((msg) => msg.id === message.id);
+
+				if (existingIndex > -1) {
+					updatedMessages[existingIndex] = message;
+				} else {
+					updatedMessages.push(message);
+				}
+
+				prev.set(message.conversationId, updatedMessages);
+				return prev;
+			});
 		},
 		session
 	);
@@ -42,8 +41,8 @@ function subscribeToNewMessages(session: any, onNewMessage?: (m: Message) => voi
 
 function addMessage(message: MessageWithLoading) {
 	messages.update((prev) => {
-		prev.set(message.conversationId, [...(prev.get(message.conversationId) || []), message]);
-
+		const existingMessages = prev.get(message.conversationId) || [];
+		prev.set(message.conversationId, [...existingMessages, message]);
 		return prev;
 	});
 }

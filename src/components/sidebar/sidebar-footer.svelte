@@ -1,7 +1,7 @@
 <script lang="ts">
 import * as Sidebar from '@/components/ui/sidebar';
 import * as DropdownMenu from '@/components/ui/dropdown-menu';
-import UserAvatar from './user-avatar.svelte';
+import UserAvatar from '../user-avatar.svelte';
 import type { User } from '@/lib/types';
 import { ChevronsUpDown, LogOut, MessageCirclePlus, Moon, Sun } from 'lucide-svelte';
 import { authClient } from '@/lib/auth/auth-client';

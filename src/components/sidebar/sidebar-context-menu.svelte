@@ -1,11 +1,11 @@
 <script lang="ts">
 import { UserPlus, UserIcon, Pencil, LogOut, Trash2 } from 'lucide-svelte';
-import * as ContextMenu from './ui/context-menu';
-import * as AlertDialog from './ui/alert-dialog';
+import * as ContextMenu from '../ui/context-menu';
+import * as AlertDialog from '../ui/alert-dialog';
 import type { Conversation } from '@/lib/types';
 import { mutate } from '@/lib/graphql/client';
 import ConversationOperations from '@/lib/graphql/operations/conversations';
-import { buttonVariants } from './ui/button';
+import { Button, buttonVariants } from '../ui/button';
 
 let { children, conv }: { conv: Conversation; children: any } = $props();
 
@@ -103,13 +103,14 @@ function openDialog(ev: MouseEvent) {
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action
-				class={buttonVariants({ variant: 'destructive' })}
+			<Button
+				variant="destructive"
+				{loading}
 				disabled={loading}
 				onclick={canBeLeaved ? leaveConv : deleteConv}
 			>
 				Continue
-			</AlertDialog.Action>
+			</Button>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

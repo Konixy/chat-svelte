@@ -8,22 +8,10 @@ let { data } = $props();
 let user = $derived(data.session.user);
 let sidebar = Sidebar.useSidebar();
 
-async function signOut() {
-	await authClient.signOut({
-		fetchOptions: {
-			onSuccess: () => {
-				goto('/auth');
-			}
-		}
-	});
-}
-
 // $effect(() => {
 // 	sidebar.setOpenMobile(true);
 // });
 </script>
-
-<!-- TODO: fix that shit -->
 
 <div class="m-6 -mt-11 flex items-center gap-2">
 	<Sidebar.Trigger class="md:hidden" />

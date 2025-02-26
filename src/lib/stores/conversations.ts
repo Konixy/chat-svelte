@@ -17,22 +17,24 @@ function conversationsSubscribe(session: Session, invalidate: () => Promise<void
 
 			invalidate();
 			conversations.update((prev) => {
+				let updated = [...prev];
+
 				if (conv) {
-					if (prev.find((c) => c.id === conv.id)) {
-						const i = prev.findIndex((c) => c.id === conv.id);
-						if (conv.participants.find((p) => p.user.id === session.user.id)) prev[i] = conv;
-						else prev.splice(i, 1);
+					const index = updated.findIndex((c) => c.id === conv.id);
+					if (index !== -1) {
+						if (conv.participants.find((p) => p.user.id === session.user.id)) {
+							updated[index] = conv;
+						} else {
+							updated.splice(index, 1);
+						}
 					} else {
-						prev.push(conv);
+						updated.push(conv);
 					}
 				} else if (oldConv) {
-					if (prev.find((c) => c.id === oldConv.id)) {
-						const i = prev.findIndex((c) => c.id === oldConv.id);
-						prev.splice(i, 1);
-					}
+					updated = updated.filter((c) => c.id !== oldConv.id);
 				}
 
-				return prev.sort(
+				return updated.sort(
 					(a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
 				);
 			});

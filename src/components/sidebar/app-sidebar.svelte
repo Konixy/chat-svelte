@@ -1,16 +1,16 @@
 <script lang="ts">
-import * as Sidebar from './ui/sidebar';
-import * as Tooltip from './ui/tooltip';
-import * as ContextMenu from './ui/context-menu';
-import Input from './ui/input/input.svelte';
+import * as Sidebar from '../ui/sidebar';
+import * as Tooltip from '../ui/tooltip';
+import * as ContextMenu from '../ui/context-menu';
+import Input from '../ui/input/input.svelte';
 import type { Conversation } from '$lib/types';
-import { useSidebar } from './ui/sidebar';
-import UserAvatar from './user-avatar.svelte';
+import { useSidebar } from '../ui/sidebar';
+import UserAvatar from '../user-avatar.svelte';
 import { formatDistance } from 'date-fns';
 import { blur } from 'svelte/transition';
 import type { User } from '@/lib/types';
 import SidebarFooter from './sidebar-footer.svelte';
-import CreateConversationModal from './chat/create-conversation-modal.svelte';
+import CreateConversationModal from '../chat/create-conversation-modal.svelte';
 import { LogOut, MessageCirclePlus, Pencil, Trash2, UserIcon, UserPlus } from 'lucide-svelte';
 import SidebarContextMenu from './sidebar-context-menu.svelte';
 

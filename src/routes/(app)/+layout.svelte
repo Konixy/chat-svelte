@@ -1,7 +1,7 @@
 <script lang="ts">
 import { invalidateAll } from '$app/navigation';
 import { page } from '$app/state';
-import AppSidebar from '@/components/app-sidebar.svelte';
+import AppSidebar from '@/components/sidebar/app-sidebar.svelte';
 import * as Sidebar from '@/components/ui/sidebar';
 import { conversationsSubscribe, conversations } from '@/lib/stores/conversations';
 
@@ -15,6 +15,14 @@ let convId: string | undefined = $derived(page.params.convId);
 $conversations =
 	convs?.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()) || [];
 
+let totalUnread = $derived(
+	$conversations?.reduce(
+		(acc, conv) =>
+			acc + (conv.participants.find((p) => p.user.id === user.id)?.unreadMessages || 0),
+		0
+	) || 0
+);
+
 $effect(() => {
 	const unsubscibe = conversationsSubscribe(data.session, invalidateAll);
 
@@ -22,7 +30,11 @@ $effect(() => {
 });
 </script>
 
-<!-- <ThemeSwitcher class="absolute top-0 right-0 m-10" /> -->
+<svelte:head>
+	<title>
+		{totalUnread > 0 ? `(${totalUnread}) ` : ''}Chat
+	</title>
+</svelte:head>
 
 <Sidebar.Provider open={data.sidebarOpen}>
 	<AppSidebar {user} conversations={$conversations || []} {convId} />

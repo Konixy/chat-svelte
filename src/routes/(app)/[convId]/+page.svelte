@@ -63,7 +63,7 @@ $effect(() => {
 <!-- change that ugly arbitrary value (don't work on mobile and when sidebar closed) -->
 <div
 	bind:this={parent}
-	class="w-screen flex-1 overflow-y-scroll not-md:mb-4 md:w-[calc(100svw-(--spacing(90)))]"
+	class="w-screen flex-1 overflow-y-scroll not-md:mb-4 md:w-[calc(100svw-var(--sidebar-width)-(--spacing(2)))]"
 >
 	<ChatMessages {user} {parent} />
 </div>
