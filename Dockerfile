@@ -1,4 +1,4 @@
-FROM oven/bun:1.2.4-alpine AS chat-svelte
+FROM imbios/bun-node:latest-23-alpine AS chat-svelte
 
 LABEL Developpers="Anatole Dufour"
 
