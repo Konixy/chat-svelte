@@ -11,7 +11,7 @@ RUN bun install --frozen-lockfile
 RUN bun run prisma:generate
 RUN bun run build
 
-RUN rm -rf src/ static/ docker-compose.yml
+RUN rm -rf docker-compose.yml
 
 USER bun:bun
 
