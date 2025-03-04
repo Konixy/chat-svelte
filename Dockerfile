@@ -1,4 +1,4 @@
-FROM node:23.6-alpine AS chat-svelte
+FROM oven/bun:1.2.4-alpine AS chat-svelte
 
 LABEL Developpers="Anatole Dufour"
 
@@ -6,13 +6,13 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm ci
+RUN bun install --frozen-lockfile
 
-RUN npm run prisma
-RUN npm run build
+RUN bun run prisma:generate
+RUN bun run build
 
 RUN rm -rf src/ static/ docker-compose.yml
 
-USER node:node
+USER bun:bun
 
-CMD ["node", "build"]
+CMD ["bun", "./build"]

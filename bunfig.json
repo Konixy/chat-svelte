@@ -1,0 +1,16 @@
+{
+	"install": {
+		"registry": "https://registry.npmjs.org/",
+		"cache": true
+	},
+	"dev": {
+		"hot": true
+	},
+	"build": {
+		"minify": true,
+		"sourcemap": true
+	},
+	"prisma": {
+		"studio": true
+	}
+}
