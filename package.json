@@ -4,15 +4,16 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
+		"dev": "bunx --bun vite dev",
+		"build": "bunx --bun vite build",
+		"preview": "bunx --bun vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"prisma:generate": "bunx prisma generate --schema ./src/lib/prisma/schema.prisma",
-		"prisma:studio": "bunx prisma studio --schema ./src/lib/prisma/schema.prisma"
+		"prisma:studio": "bunx prisma studio --schema ./src/lib/prisma/schema.prisma",
+		"prepare": "svelte-kit sync"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
